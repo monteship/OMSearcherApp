@@ -40,5 +40,11 @@ class DuplicateFilterMiddleware(AbstractMiddleware):
         return city_results
 
     def update_collected(self) -> None:
+        old_data = self.load_collected()
+
+        # Union of old and new data
+        written_data = old_data.union(self.collected)
+
+        # Write to file
         with open(self.path, "wb") as f:
-            pickle.dump(self.collected, file=f)
+            pickle.dump(written_data, file=f)
