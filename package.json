@@ -1,0 +1,124 @@
+{
+  "Denmark": {
+    "name": "denmark",
+    "suf": "dk",
+    "lang": "da",
+    "queries": [
+      "ledige boliger {}",
+      "værelse til leje {}",
+      "ledige lejligheder {}",
+      "udlejning til leje {}"
+    ]
+  },
+  "Sweden": {
+    "country": "sweden",
+    "lang": "sv",
+    "suf": "se",
+    "queries": [
+      "hus att hyra {}",
+      "rum att hyra {}",
+      "lägenheter att hyra {}",
+      "lediga-objekt {}"
+    ]
+  },
+  "Netherlands": {
+    "country": "netherlands",
+    "suf": "nl",
+    "lang": "nl",
+    "queries": [
+      "huis te huur {}",
+      "kamer te huur {}",
+      "woning te huur {}",
+      "appartement te huur {}"
+    ]
+  },
+  "Belgium": {
+    "country": "belgium",
+    "lang": "be",
+    "suf": "nl",
+    "queries": [
+      "huis te huur {}",
+      "kamer te huur {}",
+      "woning te huur {}",
+      "appartement te huur {}"
+    ]
+  },
+  "France": {
+    "country": "france",
+    "lang": "fr",
+    "suf": "fr",
+    "queries": [
+      "Maison à louer {}",
+      "Chambre à louer {}",
+      "Logement à louer {}",
+      "Appartement à louer {}"
+    ]
+  },
+  "Germany": {
+    "country": "germany",
+    "lang": "de",
+    "suf": "de",
+    "queries": [
+      "Haus zu vermieten {}",
+      "Zimmer zu vermieten {}",
+      "Immobilie zu vermieten {}",
+      "Wohnung zu vermieten {}"
+    ]
+  },
+  "Ireland": {
+    "country": "ireland",
+    "lang": "en",
+    "suf": "ie",
+    "queries": [
+      "Apartment for rent {}",
+      "House for rent {}",
+      "Room for rent {}",
+      "Housing for rent {}"
+    ]
+  },
+  "Italy": {
+    "country": "italy",
+    "lang": "it",
+    "suf": "it",
+    "queries": [
+      "Casa in affitto {}",
+      "Stanza in affitto {}",
+      "Proprietà in affitto {}",
+      "Appartamento in affitto {}"
+    ]
+  },
+  "Spain": {
+    "country": "spain",
+    "lang": "es",
+    "suf": "es",
+    "queries": [
+      "Casa en alquiler {}",
+      "Habitación en alquiler {}",
+      "Propiedad en alquiler {}",
+      "Apartamento en alquiler {}"
+    ]
+  },
+  "United Kingdom": {
+    "country": "united_kingdom",
+    "lang": "en",
+    "suf": "uk",
+    "queries": [
+      "Apartment for rent {}",
+      "House for rent {}",
+      "Room for rent {}",
+      "Housing for rent {}"
+    ]
+  },
+  "United States": {
+    "country": "united_states",
+    "lang": "en",
+    "suf": "us",
+    "queries": [
+      "Apartment for rent {}",
+      "House for rent {}",
+      "Room for rent {}",
+      "Housing for rent {}"
+    ]
+  }
+}
+
