@@ -2,8 +2,6 @@ import os
 import pickle
 from abc import ABC, abstractmethod
 
-from database import CityResults, DomainItem
-
 
 class AbstractMiddleware(ABC):
     @abstractmethod
@@ -11,7 +9,7 @@ class AbstractMiddleware(ABC):
         pass
 
     @abstractmethod
-    async def filter(self, city_results: CityResults) -> CityResults:
+    async def filter(self, domain: str) -> bool:
         pass
 
     @abstractmethod
@@ -21,7 +19,7 @@ class AbstractMiddleware(ABC):
 
 class DuplicateFilterMiddleware(AbstractMiddleware):
     def __init__(self, country):
-        self.path = os.path.join(os.getcwd(), country, "data.pkl")
+        self.path = os.path.join(os.getcwd(), country.lower().replace(" ", "_"), "collected.pkl")
         self.collected = self.load_collected()
 
     def load_collected(self) -> set:
@@ -31,13 +29,11 @@ class DuplicateFilterMiddleware(AbstractMiddleware):
 
         return pickle.load(open(self.path, "rb"))
 
-    async def filter(self, city_results: CityResults) -> CityResults:
-        for _, city_result in city_results:
-            domain_item: DomainItem = city_result["domain"]
-            if (domain := domain_item.domain) in self.collected:
-                city_results.remove(city_result)
-            self.collected.add(domain)
-        return city_results
+    async def filter(self, domain: str) -> bool:
+        if domain in self.collected:
+            return False
+        self.collected.add(domain)
+        return True
 
     def update_collected(self) -> None:
         old_data = self.load_collected()

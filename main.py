@@ -1,6 +1,6 @@
 import asyncio
 
-from database import PostgresqlDatabase
+from database import JsonWriter
 from middleware import DuplicateFilterMiddleware
 from search import QueryBuilder, SerpAPISearchEngine
 
@@ -10,7 +10,8 @@ async def run(country: str, cities: str | list[str], searcher: str):
     query_builder = QueryBuilder(country)
     middleware = DuplicateFilterMiddleware(country)
     search_engine = SerpAPISearchEngine(searcher, middleware)
-    database = PostgresqlDatabase()
+    # database = PostgresqlDatabase()
+    database = JsonWriter(country)
 
     # Build queries for each city
     cities_queries = query_builder.build_queries(cities)

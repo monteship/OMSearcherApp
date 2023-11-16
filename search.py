@@ -29,7 +29,7 @@ class AbstractSearchEngine(ABC):
 
 
 class SerpAPISearchEngine(AbstractSearchEngine):
-    def __init__(self, searcher: str, middlewares: list[AbstractMiddleware]| AbstractMiddleware):
+    def __init__(self, searcher: str, middlewares: list[AbstractMiddleware] | AbstractMiddleware):
         self.searcher = searcher
         self.middlewares = middlewares
 
@@ -52,6 +52,7 @@ class SerpAPISearchEngine(AbstractSearchEngine):
                 if domain in city_results:
                     continue
 
+                # Filter domains by middlewares return True if domain is allowed
                 if any(await middleware.filter(domain) for middleware in self.middlewares):
                     continue
 
@@ -76,16 +77,10 @@ class SerpAPISearchEngine(AbstractSearchEngine):
                 for url in urls:
                     url_to_search = url
                     while True:
-                        results_count = await self.fetch_url_results(
-                            session, url_to_search, city_results
-                        )
+                        results_count = await self.fetch_url_results(session, url_to_search, city_results)
                         if results_count < 100:
                             break
-                        url_to_search = (
-                            url
-                            + "&start="
-                            + str(len(search_results.get(url_to_search, [])))
-                        )
+                        url_to_search = url + "&start=" + str(len(search_results.get(url_to_search, [])))
 
                 search_results.cities.append(city_results)
 
@@ -97,8 +92,7 @@ class QueryBuilder:
         self.country = country
         self.api_key = os.environ.get("SERPAPI_API_KEY")
         self.temp = (
-            "https://serpapi.com/search?q={query}&location={country}&hl={lang}&gl={suf}&api_key={"
-            "api_key}&num=100"
+            "https://serpapi.com/search?q={query}&location={country}&hl={lang}&gl={suf}&api_key={" "api_key}&num=100"
         )
         self.country_settings = self._load_country_settings()
 
@@ -123,6 +117,3 @@ class QueryBuilder:
                 )
                 queries[city_name].append(query_url)
         return queries
-
-
-

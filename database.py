@@ -1,5 +1,7 @@
+import json
 import os
 from abc import ABC, abstractmethod
+from datetime import datetime
 from typing import List
 
 import psycopg2
@@ -108,3 +110,63 @@ class PostgresqlDatabase(AbstractDatabase):
 
     def read(self):
         pass
+
+
+def normalize_text(text: str) -> str:
+    return text.replace(" ", "_").lower()
+
+
+class JsonWriter(AbstractDatabase):
+    def __init__(self, country: str):
+        self.file_path = f"results/{normalize_text(country)}/"
+
+    def write(self, engine_results: SearchEngineResult):
+        if not os.path.exists(self.file_path):
+            os.makedirs(self.file_path)
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
+        for city in engine_results.cities:
+            with open(f"{self.file_path}{normalize_text(city.city_name)}-{timestamp}.json", "w") as f:
+                results = {index:result.model_dump(mode="python") for index, result in enumerate(city.results, 1)}
+                f.write(json.dumps(results))
+
+    def read(self):
+        pass
+
+
+if __name__ == "__main__":
+    from faker import Faker
+
+    fake = Faker()
+
+
+    def fake_domain_item():
+        return DomainItem(
+            domain=fake.url(),
+            link=fake.url(),
+            title=fake.company(),
+            snippet=fake.sentence(),
+            searcher=fake.word(),
+        )
+
+
+    def fake_city_item():
+        return CityResults(
+            city_name=fake.city(),
+            results=[fake_domain_item() for _ in range(1000)],
+        )
+
+
+    engine_result = SearchEngineResult(
+        cities=[
+            fake_city_item(),
+            fake_city_item(),
+            fake_city_item(),
+            fake_city_item(),
+            fake_city_item(),
+            fake_city_item(),
+        ]
+    )
+    countries = [fake.country() for _ in range(40)]
+    for country in countries:
+        writer = JsonWriter(country)
+        writer.write(engine_result)
