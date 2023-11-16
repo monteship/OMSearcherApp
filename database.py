@@ -126,7 +126,7 @@ class JsonWriter(AbstractDatabase):
         timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
         for city in engine_results.cities:
             with open(f"{self.file_path}{normalize_text(city.city_name)}-{timestamp}.json", "w") as f:
-                results = {index:result.model_dump(mode="python") for index, result in enumerate(city.results, 1)}
+                results = {index: result.model_dump(mode="python") for index, result in enumerate(city.results, 1)}
                 f.write(json.dumps(results))
 
     def read(self):
@@ -138,7 +138,6 @@ if __name__ == "__main__":
 
     fake = Faker()
 
-
     def fake_domain_item():
         return DomainItem(
             domain=fake.url(),
@@ -148,13 +147,11 @@ if __name__ == "__main__":
             searcher=fake.word(),
         )
 
-
     def fake_city_item():
         return CityResults(
             city_name=fake.city(),
             results=[fake_domain_item() for _ in range(1000)],
         )
-
 
     engine_result = SearchEngineResult(
         cities=[
